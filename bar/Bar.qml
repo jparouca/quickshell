@@ -51,6 +51,8 @@ PanelWindow {
       return barWindowTitle;
     if (t == "keyboard")
       return barKeyboard;
+    if (t == "tray")
+      return systemTray;
     return null;
   }
 
@@ -277,6 +279,10 @@ PanelWindow {
     Battery {
       id: battery
       visible: root.showBattery
+    }
+
+    SystemTray {
+      id: systemTray
     }
 
     Clock {
