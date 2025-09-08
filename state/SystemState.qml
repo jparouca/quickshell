@@ -17,12 +17,14 @@ Singleton {
   property string networkU
   property string temp
   property string osString
+  property bool hypridleRunning: false
 
   function setHypridleStatus(enable) {
     if (enable)
       Quickshell.execDetached(["hypridle"])
     else
       Quickshell.execDetached(["bash", "-c", "killall -9 hypridle"]);
+    hypridleRunning = enable;
   }
 
   function netSpeedToInt(input) {
@@ -176,6 +178,19 @@ Singleton {
     }
   }
 
+  Process {
+    id: hypridleProc
+
+    command: ["pgrep", "hypridle"]
+    running: true
+
+    stdout: SplitParser {
+      onRead: data => {
+        hypridleRunning = data.trim().length > 0;
+      }
+    }
+  }
+
   Timer {
     interval: 5000
     running: true
@@ -185,6 +200,7 @@ Singleton {
       cpuProc.running = true;
       networkProc.running = true;
       tempProc.running = true;
+      hypridleProc.running = true;
     }
   }
 

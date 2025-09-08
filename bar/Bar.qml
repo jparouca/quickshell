@@ -53,6 +53,8 @@ PanelWindow {
       return barKeyboard;
     if (t == "tray")
       return systemTray;
+    if (t == "idle")
+      return idleInhibit;
     return null;
   }
 
@@ -291,6 +293,10 @@ PanelWindow {
 
     KeyboardLayout {
       id: barKeyboard
+    }
+
+    IdleInhibit {
+      id: idleInhibit
     }
 
     RightMenuButton {
