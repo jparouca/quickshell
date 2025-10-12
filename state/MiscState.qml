@@ -6,6 +6,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 
+import "../config" as C
+
 Singleton {
   id: root
 
@@ -16,6 +18,8 @@ Singleton {
   property bool settingsOpenGrab: false
 
   property string keyboardLayout: ""
+
+  property bool trayInBar: C.Config.settings.bar.moduleCenter.indexOf("tray") != -1 || C.Config.settings.bar.modulesLeft.indexOf("tray") != -1 || C.Config.settings.bar.modulesRight.indexOf("tray") != -1
 
   Process {
     id: devicesProc

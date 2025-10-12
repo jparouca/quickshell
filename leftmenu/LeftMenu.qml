@@ -2,6 +2,8 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell.Widgets
 
+import "../state" as S
+
 WrapperItem {
   implicitWidth: 400
   implicitHeight: leftMenuLayout.implicitHeight
@@ -19,6 +21,7 @@ WrapperItem {
       Layout.fillWidth: true
     }
     SystemTray {
+      visible: !S.MiscState.trayInBar
       Layout.fillWidth: true
     }
   }

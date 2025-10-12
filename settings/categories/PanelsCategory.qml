@@ -231,7 +231,7 @@ CategoryBlueprint {
                     opacity: C.Config.settings.panels.monitorChoiceMode == 0 ? 1 : 0
                     z: C.Config.settings.panels.monitorChoiceMode == 0 ? 3 : 2
                     label: "Don't show widgets on"
-                    value: asMonitorString(C.Config.settings.panels.excludedMonitors)
+                    value: C.Config.asMonitorString(C.Config.settings.panels.excludedMonitors)
                     onChanged: (x) => {
                         let arr = fromCommaList(x);
                         if (arr == [])
@@ -262,7 +262,7 @@ CategoryBlueprint {
                     opacity: C.Config.settings.panels.monitorChoiceMode == 1 ? 1 : 0
                     z: C.Config.settings.panels.monitorChoiceMode == 1 ? 3 : 2
                     label: "Show widgets on"
-                    value: asMonitorString(C.Config.settings.panels.includedMonitors)
+                    value: C.Config.asMonitorString(C.Config.settings.panels.includedMonitors)
                     onChanged: (x) => {
                         let arr = fromCommaList(x);
                         if (arr == [])

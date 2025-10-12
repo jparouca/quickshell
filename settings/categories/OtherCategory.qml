@@ -117,7 +117,7 @@ CategoryBlueprint {
                     opacity: C.Config.settings.mpris.selectionMode == 0 ? 1 : 0
                     z: C.Config.settings.mpris.selectionMode == 0 ? 3 : 2
                     label: "Exclude players"
-                    value: asMonitorString(C.Config.settings.mpris.excludedPlayers)
+                    value: C.Config.asMonitorString(C.Config.settings.mpris.excludedPlayers)
                     onChanged: (x) => {
                         let arr = fromCommaList(x);
                         if (arr == [])
@@ -148,7 +148,7 @@ CategoryBlueprint {
                     opacity: C.Config.settings.mpris.selectionMode == 1 ? 1 : 0
                     z: C.Config.settings.mpris.selectionMode == 1 ? 3 : 2
                     label: "Include players"
-                    value: asMonitorString(C.Config.settings.mpris.includedPlayers)
+                    value: C.Config.asMonitorString(C.Config.settings.mpris.includedPlayers)
                     onChanged: (x) => {
                         let arr = fromCommaList(x);
                         if (arr == [])

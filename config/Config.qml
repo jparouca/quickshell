@@ -17,6 +17,10 @@ Singleton {
     Bottom
   }
 
+  function asMonitorString(mons) {
+    return mons.join(",");
+  }
+
   function epochSecondsToHuman(sec) {
     if (sec < 10)
       return "None";
@@ -262,6 +266,7 @@ Singleton {
 
         property JsonObject battery: JsonObject {
           property int low: 20
+          property bool hideOnFull: false
         }
       }
       property JsonObject fonts: JsonObject {

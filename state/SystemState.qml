@@ -17,6 +17,7 @@ Singleton {
   property string networkU
   property string temp
   property string osString
+  property bool gamemodeActive: false
   property bool hypridleRunning: false
 
   function setHypridleStatus(enable) {
@@ -24,7 +25,6 @@ Singleton {
       Quickshell.execDetached(["hypridle"])
     else
       Quickshell.execDetached(["bash", "-c", "killall -9 hypridle"]);
-    hypridleRunning = enable;
   }
 
   function netSpeedToInt(input) {
@@ -179,6 +179,19 @@ Singleton {
   }
 
   Process {
+    id: gamemodeProc
+
+    command: ["gamemoded", "-s"]
+    running: true
+
+    stdout: SplitParser {
+      onRead: data => {
+        gamemodeActive = data.includes("is active");
+      }
+    }
+  }
+
+  Process {
     id: hypridleProc
 
     command: ["pgrep", "hypridle"]
@@ -200,6 +213,7 @@ Singleton {
       cpuProc.running = true;
       networkProc.running = true;
       tempProc.running = true;
+      gamemodeProc.running = true;
       hypridleProc.running = true;
     }
   }

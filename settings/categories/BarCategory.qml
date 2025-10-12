@@ -184,7 +184,7 @@ CategoryBlueprint {
 
             CW.StyledText {
                 Layout.topMargin: 10
-                text: "Available modules: workspaces, battery, weather, clock, title, mpris, keyboard"
+                text: "Available modules: workspaces, battery, weather, clock, title, mpris, keyboard, tray"
 
                 font {
                     pointSize: C.Config.fontSize.small
@@ -330,6 +330,16 @@ CategoryBlueprint {
                 to: 50
                 value: C.Config.settings.bar.battery.low
                 onMoved: C.Config.settings.bar.battery.low = Math.round(value)
+            }
+
+            Spacerr {
+            }
+
+            CW.ValueSwitch {
+                label: "Hide on full"
+                checked: C.Config.settings.bar.battery.hideOnFull
+                onToggled: C.Config.settings.bar.battery.hideOnFull = checked
+                Layout.fillWidth: true
             }
 
             Spacerr {

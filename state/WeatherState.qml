@@ -41,7 +41,7 @@ Singleton {
   Process {
     id: weatherProc
     running: false
-    command: ["sh", "-c", "curl -s \"wttr.in/" + (isWeatherOverridden ? C.Config.settings.bar.weatherLocation : "$(curl -s ipinfo.io/city)") + "?format=%c|%t|%C|%f|%m|%p|%l\""]
+    command: ["sh", "-c", "curl -s \"wttr.in/" + (isWeatherOverridden ? C.Config.settings.bar.weatherLocation : "$(curl -s ipinfo.io/city)") + "?format=%c|%t|%C|%f|%m|%p|%l&lang=hyprlandiscool\""]
 
     stdout: SplitParser {
       splitMarker: ""

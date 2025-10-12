@@ -21,7 +21,7 @@ PanelWindow {
   readonly property real borderMargin: C.Config.settings.panels.borders ? C.Config.settings.panels.bordersSize : 0
   readonly property real topContentMargin: borderMargin + (C.Config.edge == C.Config.BarEdge.Top ? uncompactState : compactState) * gapsVert
   readonly property real bottomContentMargin: borderMargin + (C.Config.edge == C.Config.BarEdge.Bottom ? uncompactState : compactState) * gapsVert
-  readonly property bool showBattery: UPower.displayDevice.isLaptopBattery
+  readonly property bool showBattery: UPower.displayDevice.isLaptopBattery && (!C.Config.settings.bar.battery.hideOnFull ? true : UPower.displayDevice.percentage < 0.99)
   property real compactState: compact ? 1 : 0
   property real uncompactState: 1 - compactState
 
@@ -52,8 +52,10 @@ PanelWindow {
     if (t == "keyboard")
       return barKeyboard;
     if (t == "tray")
-      return systemTray;
-    if (t == "idle")
+      return barTray;
+    if (t == "gamemode")
+      return gamemode;
+    if (t == "idleinhibit")
       return idleInhibit;
     return null;
   }
@@ -283,16 +285,20 @@ PanelWindow {
       visible: root.showBattery
     }
 
-    SystemTray {
-      id: systemTray
-    }
-
     Clock {
       id: clock
     }
 
     KeyboardLayout {
       id: barKeyboard
+    }
+
+    SystemTray {
+      id: barTray
+    }
+
+    Gamemode {
+      id: gamemode
     }
 
     IdleInhibit {
