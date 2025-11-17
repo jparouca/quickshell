@@ -41,6 +41,8 @@ PanelWindow {
       return workspaces;
     if (t == "mpris")
       return barMpris;
+    if (t == "onething")
+      return barOneThing;
     if (t == "weather")
       return C.Config.settings.bar.weather ? weather : null;
     if (t == "battery")
@@ -57,6 +59,12 @@ PanelWindow {
       return gamemode;
     if (t == "idleinhibit")
       return idleInhibit;
+    if (t == "networkD")
+      return networkDownload;
+    if (t == "networkU")
+      return networkUpload;
+    if (t == "networkTotal")
+      return networkTotal;
     return null;
   }
 
@@ -276,6 +284,12 @@ PanelWindow {
       Layout.maximumWidth: 350
     }
 
+    OneThing {
+      id: barOneThing
+
+      Layout.maximumWidth: 350
+    }
+
     Weather {
       id: weather
     }
@@ -303,6 +317,18 @@ PanelWindow {
 
     IdleInhibit {
       id: idleInhibit
+    }
+
+    NetworkDownload {
+      id: networkDownload
+    }
+
+    NetworkUpload {
+      id: networkUpload
+    }
+
+    NetworkTotal {
+      id: networkTotal
     }
 
     RightMenuButton {

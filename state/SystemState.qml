@@ -2,6 +2,7 @@ pragma Singleton
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtCore
 import Quickshell
 import Quickshell.Io
 
@@ -15,6 +16,8 @@ Singleton {
   property real cpu
   property string networkD
   property string networkU
+  property string networkTotal: netTotalToString(networkTotalBytes)
+  property real networkTotalBytes: networkStats.totalBytes
   property string temp
   property string osString
   property bool gamemodeActive: false
@@ -47,6 +50,28 @@ Singleton {
     else
       str = (bytes) + "B";
     return str;
+  }
+
+  function netTotalToString(bytes) {
+    let str = "";
+    if (bytes > 1e+09)
+      str = (parseInt(bytes / 1e+08) / 10) + "GB";
+    else if (bytes > 1e+06)
+      str = (parseInt(bytes / 100000) / 10) + "MB";
+    else if (bytes > 1000)
+      str = (parseInt(bytes / 100) / 10) + "KB";
+    else
+      str = (bytes) + "B";
+    return str;
+  }
+
+  function resetNetworkTotal() {
+    networkTotalBytes = 0;
+    networkStats.totalBytes = 0;
+  }
+
+  function saveNetworkStats() {
+    networkStats.totalBytes = networkTotalBytes;
   }
 
   Process {
@@ -160,6 +185,10 @@ Singleton {
         }
         networkD = `${netSpeedToString(down)}`;
         networkU = `${netSpeedToString(up)}`;
+
+        // Accumulate total bytes (down + up)
+        networkTotalBytes += down + up;
+
         return true;
       }
     }
@@ -205,13 +234,21 @@ Singleton {
   }
 
   Timer {
+    interval: 1000
+    running: true
+    repeat: true
+    onTriggered: () => {
+      networkProc.running = true;
+    }
+  }
+
+  Timer {
     interval: 5000
     running: true
     repeat: true
     onTriggered: () => {
       ramProc.running = true;
       cpuProc.running = true;
-      networkProc.running = true;
       tempProc.running = true;
       gamemodeProc.running = true;
       hypridleProc.running = true;
@@ -224,6 +261,34 @@ Singleton {
     repeat: true
     onTriggered: () => {
       uptimeProc.running = true;
+    }
+  }
+
+  // Save network stats every 30 seconds
+  Timer {
+    interval: 30000
+    running: true
+    repeat: true
+    onTriggered: () => {
+      saveNetworkStats();
+    }
+  }
+
+  FileView {
+    path: Quickshell.dataPath("network-stats.json")
+
+    watchChanges: true
+    onFileChanged: reload()
+    onAdapterUpdated: writeAdapter()
+    onLoadFailed: error => {
+      if (error == FileViewError.FileNotFound) {
+        writeAdapter();
+      }
+    }
+
+    JsonAdapter {
+      id: networkStats
+      property real totalBytes: 0
     }
   }
 }

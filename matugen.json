@@ -51,13 +51,13 @@
 
 "outline_variant": "#3f484a",
 
-"primary": "#82d3e2",
+"primary": "#75332D",
 
 "primary_container": "#004e59",
 
 "primary_fixed": "#9fefff",
 
-"primary_fixed_dim": "#82d3e2",
+"primary_fixed_dim": "#75332D",
 
 "scrim": "#000000",
 
@@ -89,7 +89,7 @@
 
 "surface_dim": "#0e1416",
 
-"surface_tint": "#82d3e2",
+"surface_tint": "#75332D",
 
 "surface_variant": "#3f484a",
 
