@@ -65,6 +65,16 @@ PanelWindow {
       return networkUpload;
     if (t == "networkTotal")
       return networkTotal;
+    if (t == "ram")
+      return ramUsage;
+    if (t == "cpu")
+      return cpuUsage;
+    if (t == "temp")
+      return temperature;
+    if (t == "performance")
+      return performanceMonitor;
+    if (t == "poe2")
+      return poe2Price;
     return null;
   }
 
@@ -329,6 +339,26 @@ PanelWindow {
 
     NetworkTotal {
       id: networkTotal
+    }
+
+    RamUsage {
+      id: ramUsage
+    }
+
+    CpuUsage {
+      id: cpuUsage
+    }
+
+    Temperature {
+      id: temperature
+    }
+
+    PerformanceMonitor {
+      id: performanceMonitor
+    }
+
+    Poe2Price {
+      id: poe2Price
     }
 
     RightMenuButton {

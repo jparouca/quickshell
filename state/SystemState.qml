@@ -13,6 +13,7 @@ Singleton {
   property string uptime
   property string username
   property real ram
+  property real swap
   property real cpu
   property string networkD
   property string networkU
@@ -157,6 +158,19 @@ Singleton {
   }
 
   Process {
+    id: swapProc
+
+    command: ["bash", "-c", "free | grep Swap | awk '{if ($2 > 0) print int($3/$2 * 100.0); else print 0}'"]
+    running: true
+
+    stdout: SplitParser {
+      onRead: data => {
+        return swap = data;
+      }
+    }
+  }
+
+  Process {
     id: networkProc
 
     command: ["bash", "-c", "ifstat -t 1"]
@@ -248,6 +262,7 @@ Singleton {
     repeat: true
     onTriggered: () => {
       ramProc.running = true;
+      swapProc.running = true;
       cpuProc.running = true;
       tempProc.running = true;
       gamemodeProc.running = true;
