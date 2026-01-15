@@ -14,7 +14,7 @@ Singleton {
   Process {
     id: apiProc
     running: false
-    command: ["sh", "-c", "curl -s -H 'User-Agent: POE2-Quickshell/1.0' 'https://poe2scout.com/api/items/landingSplashInfo' | jq -r '.items[] | select(.text == \"Divine Orb\") | .priceLogs[0].price'"]
+    command: ["sh", "-c", "curl -s -H 'User-Agent: POE2-Quickshell/1.0' 'https://poe2scout.com/api/items/landingSplashInfo' | jq -r '.items[] | select(.text == \"Divine Orb\") | [.priceLogs[] | select(type == \"object\")] | .[0].price'"]
 
     stdout: SplitParser {
       splitMarker: ""

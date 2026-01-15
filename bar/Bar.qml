@@ -9,6 +9,7 @@ import Quickshell.Io
 PanelWindow {
   id: root
 
+  property bool inhibitGrab: false
   property bool compact: false
   property bool show: true
   property real barRadius: C.Config.settings.bar.radius

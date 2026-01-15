@@ -62,23 +62,37 @@ WrapperRectangle {
 
         acceptedButtons: Qt.RightButton | Qt.LeftButton
 
+        onPressed: event => {
+          if (event.button === Qt.RightButton) {
+            if (modelData.hasMenu) {
+              QsWindow.window.inhibitGrab = true;
+              menu.open();
+            }
+            event.accepted = true;
+          }
+        }
+
         onClicked: event => {
           switch (event.button) {
           case Qt.LeftButton:
             modelData.activate();
+            event.accepted = true;
             break;
           case Qt.RightButton:
-            if (modelData.hasMenu)
-              menu.open();
+            event.accepted = true;
             break;
           }
-          event.accepted = true;
         }
 
         QsMenuAnchor {
           id: menu
           menu: delegate.modelData.menu
-          onVisibleChanged: QsWindow.window.inhibitGrab = visible
+
+          onVisibleChanged: {
+            if (!visible) {
+              QsWindow.window.inhibitGrab = false;
+            }
+          }
 
           anchor {
             item: trayIcon
